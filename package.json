@@ -1,0 +1,23 @@
+{
+  "name": "chain-reaction",
+  "version": "1.0.0",
+  "description": "[Play online](https://chain-reaction-online.vercel.app/)",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhi-wadhwa/chain-reaction-online.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/abhi-wadhwa/chain-reaction-online/issues"
+  },
+  "homepage": "https://github.com/abhi-wadhwa/chain-reaction-online#readme",
+  "dependencies": {
+    "@vercel/blob": "^2.8.0"
+  },
+  "private": true
+}

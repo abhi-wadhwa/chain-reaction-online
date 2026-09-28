@@ -2,37 +2,29 @@
 
 [Play online](https://chain-reaction-online.vercel.app/)
 
-A basic two-player game for separate devices. One player creates a room and
-sends the invite link to a friend. The friend opens it and presses **Join**.
-Coral goes first. Keep both tabs open.
-
-## Rules
+Two players on separate devices. Create a room, copy its invite link, and send
+it to a friend. Your friend opens the link and presses Join. Coral goes first.
 
 Place an orb in an empty cell or one you own. Corners burst at 2 orbs, edges
-at 3, and interior cells at 4. Each burst sends an orb to every adjacent cell
-and captures its contents. After both players have made a move, eliminating
-the other player's orbs wins. Both players must agree to a rematch.
+at 3, and interior cells at 4. Bursts spread to adjacent cells and capture
+their contents. After both players have moved, eliminating the opponent wins.
+Both players must agree to a rematch.
 
-## Run locally
+Rooms use HTTPS requests to a Vercel function, with state in private Vercel
+Blob storage. The server validates turns and uses conditional writes to avoid
+conflicting updates. No direct browser connection is required. The browser
+polls roughly every two seconds. Refreshing the same tab restores your seat;
+rooms expire after two hours. Expiration blocks access but does not delete the
+stored room object. This is a small casual prototype with no accounts.
 
-No build step. With Python installed, run `python -m http.server 8000` in this
-folder and open `http://localhost:8000`. Internet access is required for PeerJS.
+## Development
 
-The entire app is in `index.html`. Vercel serves it as a static site.
-To redeploy from this folder, run `vercel deploy --prod` after `vercel login`
-and `vercel link --project chain-reaction-online` on a new computer.
-The original GitHub Pages mirror also publishes the root of `main`.
-PeerJS 1.5.5 provides WebRTC data connections through its public signaling
-service. The host validates moves and sends board updates to the guest.
+Install Node.js and Vercel CLI, then run `npm ci`. Link the Vercel project with
+`vercel link`, connect a private Blob store, and run `vercel dev`.
+The store uses Vercel OIDC authentication and the connected BLOB_STORE_ID.
+Keep local environment files and credentials out of Git.
 
-This is a casual game with no accounts, saved matches, or reconnection.
-Some restrictive networks cannot establish a peer-to-peer connection. There
-is no dedicated TURN relay configured; try a different network if joining
-times out. The host is trusted, so this is not an anti-cheat system.
-
-## Verification
-
-Checked turn enforcement, ownership, corner/edge/interior thresholds,
-captures, elimination, and orb conservation across 20 simulated games.
-Two browser sessions also verified joining, synchronized moves, a capture
-win, mutual rematch, and disconnect handling.
+Run `npm test` for room concurrency, authorization, replay, rematch, and game
+rules tests. Deploy with `vercel deploy --prod`. Static files live in `public/`
+and the room function in `api/room.js`. The root GitHub Pages page redirects
+to the Vercel game.
