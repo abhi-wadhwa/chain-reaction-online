@@ -1,6 +1,6 @@
 # Chain Reaction
 
-[Play online](https://abhi-wadhwa.github.io/chain-reaction-online/)
+[Play online](https://chain-reaction-online.vercel.app/)
 
 A basic two-player game for separate devices. One player creates a room and
 sends the invite link to a friend. The friend opens it and presses **Join**.
@@ -18,7 +18,10 @@ the other player's orbs wins. Both players must agree to a rematch.
 No build step. With Python installed, run `python -m http.server 8000` in this
 folder and open `http://localhost:8000`. Internet access is required for PeerJS.
 
-The entire app is in `index.html`. GitHub Pages publishes the root of `main`.
+The entire app is in `index.html`. Vercel serves it as a static site.
+To redeploy from this folder, run `vercel deploy --prod` after `vercel login`
+and `vercel link --project chain-reaction-online` on a new computer.
+The original GitHub Pages mirror also publishes the root of `main`.
 PeerJS 1.5.5 provides WebRTC data connections through its public signaling
 service. The host validates moves and sends board updates to the guest.
 
